@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "module": "NodeNext",
+        "outDir": "./dist",
+        "lib": ["ES2022", "DOM", "DOM.Iterable"],
+        "target": "ES2022",
+        "isolatedModules": false,
+        "moduleResolution": "NodeNext",
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "esModuleInterop": true,
+        // "allowImportingTsExtensions": true,
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "allowJs": true,
+        "typeRoots": ["./node_modules/@types", "./types"]
+    },
+    "include": ["./src", "./deploy-commands.ts"],
+    "exclude": ["./node_modules", "./src/app"]
+}
