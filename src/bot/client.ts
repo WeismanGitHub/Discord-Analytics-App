@@ -1,4 +1,4 @@
-import { Client, Collection, ClientOptions, Events } from 'discord.js';
+import { Client, Collection, ClientOptions, Events, GatewayIntentBits } from 'discord.js';
 import { readdirSync, statSync } from 'fs';
 import { join } from 'path';
 import zod from 'zod';
@@ -6,7 +6,7 @@ import zod from 'zod';
 function getPaths(path: string, filePaths: string[]): string[] {
     const fileStat = statSync(path);
 
-    if (fileStat.isFile() && path.endsWith('.js')) {
+    if (fileStat.isFile()) {
         filePaths.push(path);
     } else if (fileStat.isDirectory()) {
         for (const subPath of readdirSync(path)) {
@@ -18,7 +18,7 @@ function getPaths(path: string, filePaths: string[]): string[] {
 }
 
 const commandSchema = zod.object({
-    data: zod.object({}),
+    data: zod.any(),
     execute: zod.function().args(zod.array(zod.unknown())).returns(zod.promise(zod.unknown())),
 });
 
@@ -27,7 +27,7 @@ const eventSchema = zod.object({
     execute: zod.function().args(zod.array(zod.unknown())).returns(zod.promise(zod.unknown())),
 });
 
-export class CustomClient extends Client {
+class CustomClient extends Client {
     private readonly commands: Collection<unknown, any>;
 
     constructor(clientOptions: ClientOptions) {
@@ -48,11 +48,9 @@ export class CustomClient extends Client {
         const commands = [];
 
         for (const path of commandsPaths) {
-            const command = commandSchema.parse(require(path)?.default);
+            const command = commandSchema.parse(require(path).default);
 
-            // @ts-ignore
             commands.push(command.data.toJSON());
-            // @ts-ignore
             this.commands.set(command.data.name, command);
         }
 
@@ -61,15 +59,17 @@ export class CustomClient extends Client {
 
             const command = this.commands.get(interaction.commandName);
 
-            command.execute(interaction).catch((err: Error) => {
-                console.error(err.message);
+            try {
+                await command.execute(interaction);
+            } catch (err) {
+                console.error(err);
 
                 if (interaction.replied || interaction.deferred) {
                     // send an error in the channel
                 } else {
                     // respond with an error
                 }
-            });
+            }
         });
 
         console.log(`loaded ${commands.length} commands`);
@@ -84,7 +84,7 @@ export class CustomClient extends Client {
             this.on(event.name, async (...args) => {
                 try {
                     await event.execute(args);
-                } catch(err) {
+                } catch (err) {
                     console.error(err);
 
                     if (event.name !== Events.InteractionCreate) return;
@@ -96,3 +96,9 @@ export class CustomClient extends Client {
         console.log(`loaded ${eventsPaths.length} event listeners`);
     }
 }
+
+const client = new CustomClient({
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent],
+});
+
+export default client;
