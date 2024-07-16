@@ -1,7 +1,7 @@
+require('dotenv').config({ path: '.env.local' });
 import { readdirSync, statSync } from 'fs';
 import { REST, Routes } from 'discord.js';
 import { join, resolve } from 'path';
-require('dotenv').config();
 import zod from 'zod';
 
 if (!process.env.TOKEN || !process.env.BOT_ID) {
