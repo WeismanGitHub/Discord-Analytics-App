@@ -1,5 +1,6 @@
 import { Client, Collection, ClientOptions, Events, GatewayIntentBits } from 'discord.js';
 import { readdirSync, statSync } from 'fs';
+import { ErrorEmbed } from './embeds';
 import { join } from 'path';
 import zod from 'zod';
 
@@ -19,7 +20,7 @@ function getPaths(path: string, filePaths: string[]): string[] {
 
 const commandSchema = zod.object({
     data: zod.any(),
-    execute: zod.function().args(zod.array(zod.unknown())).returns(zod.promise(zod.unknown())),
+    execute: zod.function().returns(zod.promise(zod.unknown())),
 });
 
 const eventSchema = zod.object({
@@ -55,9 +56,14 @@ class CustomClient extends Client {
         }
 
         this.on(Events.InteractionCreate, async (interaction) => {
-            if (!interaction.isCommand()) return;
+            if (!interaction.isChatInputCommand()) return;
 
             const command = this.commands.get(interaction.commandName);
+
+            if (!command) {
+                console.error(`No command matching ${interaction.commandName} was found.`);
+                return;
+            }
 
             try {
                 await command.execute(interaction);
@@ -65,9 +71,15 @@ class CustomClient extends Client {
                 console.error(err);
 
                 if (interaction.replied || interaction.deferred) {
-                    // send an error in the channel
+                    await interaction.followUp({
+                        embeds: [new ErrorEmbed()],
+                        ephemeral: true,
+                    });
                 } else {
-                    // respond with an error
+                    await interaction.reply({
+                        embeds: [new ErrorEmbed()],
+                        ephemeral: true,
+                    });
                 }
             }
         });
