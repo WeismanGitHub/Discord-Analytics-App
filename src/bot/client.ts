@@ -72,7 +72,7 @@ class CustomClient extends Client {
             }
         });
 
-        console.log(`loaded ${commands.length} commands`);
+        console.log(`> Load ${commands.length} commands`);
     }
 
     private async loadEventListeners() {
@@ -93,7 +93,7 @@ class CustomClient extends Client {
             });
         }
 
-        console.log(`loaded ${eventsPaths.length} event listeners`);
+        console.log(`> Load ${eventsPaths.length} event listeners`);
     }
 }
 
