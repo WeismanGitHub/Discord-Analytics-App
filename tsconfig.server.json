@@ -19,6 +19,7 @@
         "noImplicitThis": true,
         "alwaysStrict": true,
         "esModuleInterop": true,
+        "allowImportingTsExtensions": true,
         "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
         "skipLibCheck": true,
