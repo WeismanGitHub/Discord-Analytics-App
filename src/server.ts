@@ -1,4 +1,5 @@
 import { createServer } from 'http';
+import client from './bot/client';
 import { parse } from 'url';
 import next from 'next';
 
@@ -29,3 +30,7 @@ app.prepare().then(() => {
             console.log(`> Ready on http://${hostname}:${port}`);
         });
 });
+
+import env from './env'; // I need to import it after creating the server for process.env to load, I think.
+
+client.start(env.TOKEN);
