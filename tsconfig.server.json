@@ -25,6 +25,6 @@
         "allowJs": true,
         "typeRoots": ["./node_modules/@types", "./types"]
     },
-    "include": ["server.ts"],
+    "include": ["./src/server.ts"],
     "exclude": ["./node_modules"]
 }
