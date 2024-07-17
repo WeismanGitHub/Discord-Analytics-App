@@ -83,8 +83,6 @@ class CustomClient extends Client {
                 }
             }
         });
-
-        console.log(`> Load ${commands.length} commands`);
     }
 
     private async loadEventListeners() {
@@ -104,8 +102,6 @@ class CustomClient extends Client {
                 }
             });
         }
-
-        console.log(`> Load ${eventsPaths.length} event listeners`);
     }
 }
 

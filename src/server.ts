@@ -27,10 +27,10 @@ app.prepare().then(() => {
             process.exit(1);
         })
         .listen(port, () => {
-            console.log(`> Ready on http://${hostname}:${port}`);
+            console.log(`> Website Ready`);
         });
 });
 
 import env from './env'; // I need to import it after creating the server for process.env to load, I think.
 
-client.start(env.TOKEN);
+client.start(env.TOKEN).then(() => console.log(`> Bot Ready`));
