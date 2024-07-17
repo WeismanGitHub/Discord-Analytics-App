@@ -25,7 +25,7 @@ const commandSchema = zod.object({
 
 const eventSchema = zod.object({
     name: zod.string(),
-    execute: zod.function().args(zod.array(zod.unknown())).returns(zod.promise(zod.unknown())),
+    execute: zod.any(),
 });
 
 class CustomClient extends Client {
@@ -93,7 +93,6 @@ class CustomClient extends Client {
 
             this.on(event.name, async (...args) => {
                 try {
-                    // @ts-ignore
                     await event.execute(...args);
                 } catch (err) {
                     console.error(err);
