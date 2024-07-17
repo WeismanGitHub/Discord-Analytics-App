@@ -12,7 +12,7 @@ class ErrorEmbed extends CustomEmbed {
     constructor(description: string | null = null, statusCode: number | null = null) {
         super();
 
-        this.setTitle("An error occurred!")
+        this.setTitle('An error occurred!')
             .setDescription(description)
             .setColor('#FF0000') // Red
             .setFooter({ text: `Status Code: ${statusCode ?? 'Unknown'}` });
