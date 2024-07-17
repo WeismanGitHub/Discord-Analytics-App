@@ -6,7 +6,8 @@
         "dev": "nodemon",
         "build": "next build && tsc --project tsconfig.server.json",
         "start": "cross-env NODE_ENV=production node dist/server.js",
-        "commands": "tsc --project tsconfig.commands.json && ts-node --project tsconfig.commands.json ./deploy-commands.ts"
+        "commands": "tsc --project tsconfig.commands.json && ts-node --project tsconfig.commands.json ./deploy-commands.ts",
+        "deploy": "fly deploy --local-only"
     },
     "dependencies": {
         "cross-env": "^7.0.3",
