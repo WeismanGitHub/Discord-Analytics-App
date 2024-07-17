@@ -19,13 +19,13 @@
         "noImplicitThis": true,
         "alwaysStrict": true,
         "esModuleInterop": true,
-        "allowImportingTsExtensions": true,
+        // "allowImportingTsExtensions": true,
         "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
         "skipLibCheck": true,
         "allowJs": true,
         "typeRoots": ["./node_modules/@types", "./types"]
     },
-    "include": ["./src/server.ts"],
-    "exclude": ["./node_modules"]
+    "include": ["./src"],
+    "exclude": ["./node_modules", "./src/app"]
 }
