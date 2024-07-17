@@ -1,0 +1,7 @@
+node_modules
+.gitignore
+.prettierrc.json
+deploy-commands.ts
+README.md
+LICENSE
+nodemon.json
