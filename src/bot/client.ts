@@ -93,7 +93,8 @@ class CustomClient extends Client {
 
             this.on(event.name, async (...args) => {
                 try {
-                    await event.execute(args);
+                    // @ts-ignore
+                    await event.execute(...args);
                 } catch (err) {
                     console.error(err);
 
@@ -106,7 +107,7 @@ class CustomClient extends Client {
 }
 
 const client = new CustomClient({
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent],
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
 });
 
 export default client;
