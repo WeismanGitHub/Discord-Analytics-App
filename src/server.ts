@@ -27,10 +27,12 @@ app.prepare().then(() => {
             process.exit(1);
         })
         .listen(port, () => {
-            console.log(`> Website Ready`);
+            console.log('> Website Ready');
         });
 });
 
 import env from './env'; // I need to import it after creating the server for process.env to load, I think.
+import sequelize from './database/sequelize';
 
-client.start(env.TOKEN).then(() => console.log(`> Bot Ready`));
+sequelize.authenticate().then(() => console.log('> Database Ready'));
+client.start(env.TOKEN).then(() => console.log('> Bot Ready'));
