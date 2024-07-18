@@ -9,7 +9,7 @@ class Message extends Model<InferAttributes<Message>, InferCreationAttributes<Me
     declare channelId: string;
     declare textLength: number;
     declare bot: boolean;
-    declare createdAt: Date;
+    declare createdAt?: Date;
 }
 
 Message.init(
@@ -52,7 +52,7 @@ Message.init(
 );
 
 Guild.hasMany(Message, { foreignKey: 'guildId', sourceKey: 'id' });
-Message.belongsTo(Guild, { foreignKey: 'id', targetKey: 'guildId' });
+Message.belongsTo(Guild, { foreignKey: 'guildId', targetKey: 'id' });
 
 Message.sync();
 

@@ -3,7 +3,7 @@ import { DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequ
 
 class Guild extends Model<InferAttributes<Guild>, InferCreationAttributes<Guild>> {
     declare id: string;
-    declare createdAt: Date;
+    declare createdAt?: Date;
 }
 
 Guild.init(
