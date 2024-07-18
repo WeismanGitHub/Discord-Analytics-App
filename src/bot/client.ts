@@ -1,4 +1,4 @@
-import { Client, Collection, ClientOptions, Events, GatewayIntentBits } from 'discord.js';
+import { Client, Collection, ClientOptions, Events, GatewayIntentBits, Interaction } from 'discord.js';
 import { readdirSync, statSync } from 'fs';
 import { ErrorEmbed } from './embeds';
 import { join } from 'path';
@@ -98,7 +98,15 @@ class CustomClient extends Client {
                     console.error(err);
 
                     if (event.name !== Events.InteractionCreate) return;
-                    // send an error to the client
+
+                    const interaction: Interaction = args?.[0];
+                    if (!interaction?.isChatInputCommand()) return;
+
+                    if (interaction.replied || interaction.deferred) {
+                        interaction.followUp({ embeds: [new ErrorEmbed()], ephemeral: true });
+                    } else {
+                        interaction.reply({ embeds: [new ErrorEmbed()], ephemeral: true });
+                    }
                 }
             });
         }
