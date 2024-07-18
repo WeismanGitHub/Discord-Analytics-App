@@ -5,3 +5,4 @@ deploy-commands.ts
 README.md
 LICENSE
 nodemon.json
+.env.local
