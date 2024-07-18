@@ -12,12 +12,12 @@ const envSchema = zod.object({
 });
 
 export default envSchema.parse({
-    TOKEN: process.env.TOKEN,
     BOT_ID: process.env.BOT_ID,
+    TOKEN: process.env.TOKEN,
 
     DATABASE: process.env.DATABASE,
     PASSWORD: process.env.PASSWORD,
     HOST: process.env.HOST,
     USER: process.env.USER,
-    PORT: process.env.POST,
+    PORT: Number(process.env.PORT),
 });
