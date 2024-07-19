@@ -25,6 +25,7 @@ const event = {
             guildId: message.guild.id,
             bot: message.author.bot,
             textLength: message.content.length,
+            createdAt: message.createdAt,
         });
     },
 };
