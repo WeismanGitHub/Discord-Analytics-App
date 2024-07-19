@@ -20,6 +20,7 @@
         "alwaysStrict": true,
         "esModuleInterop": true,
         // "allowImportingTsExtensions": true,
+        "downlevelIteration": true,
         "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
         "skipLibCheck": true,
