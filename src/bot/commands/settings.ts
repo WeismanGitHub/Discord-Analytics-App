@@ -6,6 +6,8 @@ import guildCache from '../cache';
 const command = {
     data: new SlashCommandBuilder()
         .setName('settings')
+        .setDescription('Modify the server settings.')
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .setDMPermission(false)
         .addBooleanOption((option) =>
             option
@@ -15,10 +17,6 @@ const command = {
         ),
     async execute(interaction: ChatInputCommandInteraction) {
         if (!interaction.guild) return;
-
-        if (!interaction.memberPermissions?.has(PermissionFlagsBits.Administrator)) {
-            throw new Error('Only administrators can use this command.');
-        }
 
         const trackMessages = interaction.options.getBoolean('track-messages', true);
 
