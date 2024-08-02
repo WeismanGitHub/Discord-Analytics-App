@@ -17,7 +17,7 @@ Guild.init(
         trackMessages: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
-            defaultValue: true,
+            defaultValue: false,
         },
         createdAt: {
             type: DataTypes.DATE,
