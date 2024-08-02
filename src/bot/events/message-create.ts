@@ -2,6 +2,10 @@ import { Guild, Message as MessageModel } from '../../database/models';
 import { Events, Message } from 'discord.js';
 import guildCache from '../cache';
 
+type GuildCache = {
+    trackMessages: boolean;
+};
+
 const event = {
     name: Events.MessageCreate,
     async execute(message: Message) {
