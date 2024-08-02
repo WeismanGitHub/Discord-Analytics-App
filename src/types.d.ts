@@ -1,0 +1,3 @@
+type GuildCache = {
+    trackMessages: boolean;
+};
