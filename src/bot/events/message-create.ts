@@ -7,16 +7,16 @@ const event = {
     async execute(message: Message) {
         if (!message.guild) return;
 
-        let value: boolean | undefined = guildCache.get(message.guild.id);
+        let cacheValue: GuildCache | undefined = guildCache.get(message.guild.id);
 
-        if (value === undefined) {
+        if (cacheValue == undefined) {
             const guild = await Guild.findOne({ where: { id: message.guild.id } });
 
-            guildCache.set(message.guild.id, Boolean(guild));
-            value = Boolean(guild);
+            guildCache.set(message.guild.id, { trackMessages: guild ? guild.trackMessages : false });
+            cacheValue = { trackMessages: guild ? guild.trackMessages : false };
         }
 
-        if (!value) return;
+        if (!cacheValue) return;
 
         await MessageModel.create({
             id: message.id,
