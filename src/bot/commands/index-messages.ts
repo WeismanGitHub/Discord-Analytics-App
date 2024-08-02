@@ -1,19 +1,15 @@
-import { SlashCommandBuilder, CommandInteraction, PermissionFlagsBits, ChannelType } from 'discord.js';
+import { SlashCommandBuilder, CommandInteraction, PermissionFlagsBits } from 'discord.js';
 import { Guild } from '../../database/models';
 import { InfoEmbed } from '../embeds';
 
 const command = {
     data: new SlashCommandBuilder()
-        .setName('index')
-        .setDescription('Add all messages in this server to the database.')
+        .setName('index-messages')
+        .setDescription('Add all the messages in this server to the database.')
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .setDMPermission(false),
     async execute(interaction: CommandInteraction) {
-        // channels invisible because of perms, forum posts, and threads
         if (!interaction.guild || !interaction.channel) return;
-
-        if (!interaction.memberPermissions?.has(PermissionFlagsBits.Administrator)) {
-            throw new Error('Only administrators can use this command.');
-        }
 
         const guild = await Guild.findOne({ where: { id: interaction.guild.id } });
 
@@ -49,7 +45,7 @@ const command = {
                 throw new Error('Could not get channel.');
             }
 
-            if (channel.type !== ChannelType.GuildText) continue;
+            if (!channel.isTextBased()) continue;
 
             await response.edit({
                 embeds: [
